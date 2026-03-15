@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "Read(//c/Dev/2026/**)",
+      "Bash(pnpm create:*)",
+      "Bash(cp -r /c/Dev/2026/temp-dashboard/* /c/Dev/2026/manuel-heider-dashboard/)",
+      "Bash(cp /c/Dev/2026/temp-dashboard/.gitignore /c/Dev/2026/manuel-heider-dashboard/)",
+      "Bash(cp /c/Dev/2026/temp-dashboard/.eslintrc.json /c/Dev/2026/manuel-heider-dashboard/)",
+      "Bash(cp -r /c/Dev/2026/temp-dashboard/.git /c/Dev/2026/manuel-heider-dashboard/)",
+      "Bash(pnpm add:*)",
+      "Bash(pnpm install:*)"
+    ]
+  }
+}
