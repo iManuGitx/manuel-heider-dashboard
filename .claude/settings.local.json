@@ -9,7 +9,8 @@
       "Bash(cp /c/Dev/2026/temp-dashboard/.eslintrc.json /c/Dev/2026/manuel-heider-dashboard/)",
       "Bash(cp -r /c/Dev/2026/temp-dashboard/.git /c/Dev/2026/manuel-heider-dashboard/)",
       "Bash(pnpm add:*)",
-      "Bash(pnpm install:*)"
+      "Bash(pnpm install:*)",
+      "Bash(pnpm dlx:*)"
     ]
   }
 }

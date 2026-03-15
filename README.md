@@ -1,36 +1,93 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Manuel Heider — Admin Dashboard
 
-## Getting Started
+Admin-Dashboard für AI Automation & Digital Systems. Verwaltet Leads, Chatbot-Konversationen und Projekte.
 
-First, run the development server:
+**Live:** `dashboard.manuel-heider.com`
+
+## Tech Stack
+
+- **Framework:** Next.js 16 (App Router, TypeScript)
+- **Auth:** Supabase Auth (Magic Link + Google OAuth)
+- **Datenbank:** Supabase PostgreSQL + Row Level Security
+- **Styling:** Tailwind CSS v4 + shadcn/ui
+- **Charts:** Recharts
+- **Deployment:** Vercel
+
+## Setup
+
+### 1. Repository klonen
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone <repo-url>
+cd manuel-heider-dashboard
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Umgebungsvariablen
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+cp .env.example .env.local
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Ausfüllen:
 
-## Learn More
+| Variable | Beschreibung |
+|----------|-------------|
+| `NEXT_PUBLIC_SUPABASE_URL` | Supabase Projekt-URL |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase Anon Key |
+| `SUPABASE_SERVICE_ROLE_KEY` | Service Role Key (für Webhook) |
+| `WEBHOOK_SECRET` | Shared Secret für Lead-Webhook |
+| `NEXT_PUBLIC_SITE_URL` | Dashboard-URL |
 
-To learn more about Next.js, take a look at the following resources:
+### 3. Supabase Schema
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+SQL aus `supabase/schema.sql` im Supabase SQL Editor ausführen.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 4. Admin-Benutzer einrichten
 
-## Deploy on Vercel
+Nach der ersten Anmeldung in Supabase den eigenen Benutzer als Admin setzen:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```sql
+UPDATE profiles SET role = 'admin' WHERE email = 'deine@email.de';
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 5. Development starten
+
+```bash
+pnpm dev
+```
+
+Öffne [http://localhost:3000](http://localhost:3000).
+
+## Vercel Deployment
+
+1. Neues Vercel-Projekt erstellen
+2. Repository verbinden
+3. Umgebungsvariablen in Vercel eintragen
+4. Domain `dashboard.manuel-heider.com` konfigurieren
+
+## Webhook
+
+Leads von `manuel-heider.com` können per POST an `/api/webhooks/lead` gesendet werden:
+
+```bash
+curl -X POST https://dashboard.manuel-heider.com/api/webhooks/lead \
+  -H "Content-Type: application/json" \
+  -H "x-webhook-secret: YOUR_SECRET" \
+  -d '{"email": "test@example.com", "name": "Test Lead", "source": "website"}'
+```
+
+## Projektstruktur
+
+```
+app/
+├── (auth)/           # Login & Auth Callback
+├── (dashboard)/      # Dashboard-Seiten (geschützt)
+│   ├── leads/        # Lead-Verwaltung
+│   ├── conversations/# Chatbot-Konversationen
+│   ├── projects/     # Projekte
+│   ├── analytics/    # Analytics (Phase 2)
+│   └── settings/     # Einstellungen
+├── api/webhooks/     # Webhook-Endpoints
+└── middleware.ts      # Auth-Guard
+```
