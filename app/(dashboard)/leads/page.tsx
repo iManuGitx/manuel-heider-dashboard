@@ -91,7 +91,7 @@ export default function LeadsPage(props: Props) {
       <Suspense fallback={null}>
         <LeadFilters />
       </Suspense>
-      <Suspense fallback={<Skeleton className="h-[400px] rounded-lg" />}>
+      <Suspense fallback={<Skeleton className="h-100 rounded-lg" />}>
         <LeadsList searchParams={props.searchParams} />
       </Suspense>
     </div>

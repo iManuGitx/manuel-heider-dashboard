@@ -84,7 +84,7 @@ export default function ConversationsPage(props: Props) {
         title="Konversationen"
         description="Chatbot-Konversationen von der Website"
       />
-      <Suspense fallback={<Skeleton className="h-[400px] rounded-lg" />}>
+      <Suspense fallback={<Skeleton className="h-100 rounded-lg" />}>
         <ConversationsList searchParams={props.searchParams} />
       </Suspense>
     </div>
