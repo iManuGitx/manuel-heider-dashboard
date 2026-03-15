@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import "./globals.css";
 
@@ -25,6 +27,8 @@ export default function RootLayout({
     <html lang="de" className="dark">
       <body className={`${inter.variable} antialiased`}>
         <TooltipProvider>{children}</TooltipProvider>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

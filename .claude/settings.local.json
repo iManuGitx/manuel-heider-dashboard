@@ -11,7 +11,9 @@
       "Bash(pnpm add:*)",
       "Bash(pnpm install:*)",
       "Bash(pnpm dlx:*)",
-      "WebFetch(domain:api.github.com)"
+      "WebFetch(domain:api.github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(pnpm build:*)"
     ]
   }
 }
