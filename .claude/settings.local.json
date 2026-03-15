@@ -16,7 +16,11 @@
       "Bash(pnpm build:*)",
       "Bash(find . -name \"*.tsx\" -not -path \"*/node_modules/*\" -exec sed -i 's/Card className=\"\"border-border\"\"/Card className=\"\"glass-card rounded-2xl\"\"/g' {} +)",
       "Bash(find c:/Dev/2026/manuel-heider-nextjs -type f \\\\\\(-name *logo* -o -name *icon* -o -name *.svg \\\\\\))",
-      "Bash(xargs grep:*)"
+      "Bash(xargs grep:*)",
+      "Bash(ls -la \"c:\\\\Dev\\\\2026\\\\manuel-heider-dashboard\\\\app\\\\\\(dashboard\\)\")",
+      "Bash(cat \"c:\\\\Dev\\\\2026\\\\manuel-heider-dashboard\\\\app\\\\\\(auth\\)\\\\layout.tsx\")",
+      "Bash(cat \"c:\\\\Dev\\\\2026\\\\manuel-heider-dashboard\\\\app\\\\\\(auth\\)\\\\callback\\\\route.ts\")",
+      "Bash(cat \"c:\\\\Dev\\\\2026\\\\manuel-heider-dashboard\\\\app\\\\\\(dashboard\\)\\\\loading.tsx\")"
     ]
   }
 }

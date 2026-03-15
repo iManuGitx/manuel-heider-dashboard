@@ -33,12 +33,12 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  // DEV BYPASS — skip auth in development
+  // DEV BYPASS — skip auth in development only
   if (process.env.NODE_ENV === "development" && process.env.DEV_BYPASS_AUTH === "true") {
     return supabaseResponse;
   }
 
-  // Not logged in and trying to access dashboard
+  // Not logged in → redirect to /login
   if (
     !user &&
     !request.nextUrl.pathname.startsWith("/login") &&
@@ -49,11 +49,28 @@ export async function updateSession(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
-  // Logged in — redirect away from login page
-  if (user && request.nextUrl.pathname.startsWith("/login")) {
-    const url = request.nextUrl.clone();
-    url.pathname = "/";
-    return NextResponse.redirect(url);
+  // Logged in — check admin role
+  if (user) {
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("role")
+      .eq("id", user.id)
+      .single();
+
+    if (!profile || profile.role !== "admin") {
+      await supabase.auth.signOut();
+      const url = request.nextUrl.clone();
+      url.pathname = "/login";
+      url.searchParams.set("error", "unauthorized");
+      return NextResponse.redirect(url);
+    }
+
+    // Admin on login page → redirect to dashboard
+    if (request.nextUrl.pathname.startsWith("/login")) {
+      const url = request.nextUrl.clone();
+      url.pathname = "/";
+      return NextResponse.redirect(url);
+    }
   }
 
   return supabaseResponse;

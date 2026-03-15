@@ -21,12 +21,8 @@ export default async function ProjectDetailPage({
 }) {
   const { id } = await params;
 
-  let project: Project;
-  try {
-    project = await getProject(id);
-  } catch {
-    notFound();
-  }
+  const project = await getProject(id);
+  if (!project) notFound();
 
   return (
     <div className="space-y-6">

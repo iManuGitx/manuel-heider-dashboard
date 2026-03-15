@@ -1,16 +1,7 @@
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { StatusBadge } from "@/components/ui/status-badge";
 import type { Lead } from "@/types";
-
-const STATUS_COLORS: Record<string, string> = {
-  new: "bg-cyan/10 text-cyan border-cyan/20",
-  contacted: "bg-primary/10 text-primary border-primary/20",
-  qualified: "bg-success/10 text-success border-success/20",
-  proposal: "bg-warning/10 text-warning border-warning/20",
-  won: "bg-success/10 text-success border-success/20",
-  lost: "bg-destructive/10 text-destructive border-destructive/20",
-};
 
 export function RecentLeads({ leads }: { leads: Lead[] }) {
   if (leads.length === 0) {
@@ -59,12 +50,7 @@ export function RecentLeads({ leads }: { leads: Lead[] }) {
                   </p>
                 )}
               </div>
-              <Badge
-                variant="outline"
-                className={STATUS_COLORS[lead.status] ?? ""}
-              >
-                {lead.status}
-              </Badge>
+              <StatusBadge status={lead.status} />
             </Link>
           ))}
         </div>

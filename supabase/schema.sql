@@ -96,6 +96,11 @@ CREATE POLICY "Admins manage projects"
     EXISTS (SELECT 1 FROM profiles WHERE id = auth.uid() AND role = 'admin')
   );
 
+-- 4b. Clients can read their own projects
+CREATE POLICY "Clients read own projects"
+  ON projects FOR SELECT
+  USING (auth.uid() = client_id);
+
 -- 5. Auto-create profile on signup
 CREATE OR REPLACE FUNCTION public.handle_new_user()
 RETURNS TRIGGER AS $$

@@ -32,7 +32,8 @@ export async function getProjects(options?: {
     const { data, count, error } = await query;
     if (error) throw error;
     return { projects: (data as Project[]) ?? [], total: count ?? 0 };
-  } catch {
+  } catch (error) {
+    console.error("[getProjects] failed:", error);
     return { projects: [], total: 0 };
   }
 }
@@ -47,7 +48,8 @@ export async function getProject(id: string) {
       .single();
     if (error) throw error;
     return data as Project;
-  } catch {
+  } catch (error) {
+    console.error("[getProject] failed:", error);
     return null;
   }
 }

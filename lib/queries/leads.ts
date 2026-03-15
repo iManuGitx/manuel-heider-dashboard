@@ -36,7 +36,8 @@ export async function getLeads(options?: {
     const { data, count, error } = await query;
     if (error) throw error;
     return { leads: (data as Lead[]) ?? [], total: count ?? 0 };
-  } catch {
+  } catch (error) {
+    console.error("[getLeads] failed:", error);
     return { leads: [], total: 0 };
   }
 }
@@ -51,7 +52,8 @@ export async function getLead(id: string) {
       .single();
     if (error) throw error;
     return data as Lead;
-  } catch {
+  } catch (error) {
+    console.error("[getLead] failed:", error);
     return null;
   }
 }

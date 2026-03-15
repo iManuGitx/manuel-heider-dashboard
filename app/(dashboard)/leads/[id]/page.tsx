@@ -14,12 +14,8 @@ export default async function LeadDetailPage({
 }) {
   const { id } = await params;
 
-  let lead: Lead;
-  try {
-    lead = await getLead(id);
-  } catch {
-    notFound();
-  }
+  const lead = await getLead(id);
+  if (!lead) notFound();
 
   return (
     <div className="space-y-6">

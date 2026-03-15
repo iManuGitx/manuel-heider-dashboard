@@ -34,7 +34,8 @@ export async function getDashboardStats() {
       .reduce((sum, p) => sum + (Number(p.monthly_revenue) || 0), 0);
 
     return { newLeadsThisWeek, openLeads, activeProjects, mrr };
-  } catch {
+  } catch (error) {
+    console.error("[getDashboardStats] failed:", error);
     return { newLeadsThisWeek: 0, openLeads: 0, activeProjects: 0, mrr: 0 };
   }
 }
@@ -67,7 +68,8 @@ export async function getLeadsOverTime() {
       date,
       leads: count,
     }));
-  } catch {
+  } catch (error) {
+    console.error("[getLeadsOverTime] failed:", error);
     return [];
   }
 }
@@ -87,7 +89,8 @@ export async function getLeadsBySource() {
       source,
       count,
     }));
-  } catch {
+  } catch (error) {
+    console.error("[getLeadsBySource] failed:", error);
     return [];
   }
 }
@@ -106,7 +109,8 @@ export async function getLeadStatusDistribution() {
       status,
       count,
     }));
-  } catch {
+  } catch (error) {
+    console.error("[getLeadStatusDistribution] failed:", error);
     return [];
   }
 }
@@ -120,7 +124,8 @@ export async function getRecentLeads(limit = 5) {
       .order("created_at", { ascending: false })
       .limit(limit);
     return data ?? [];
-  } catch {
+  } catch (error) {
+    console.error("[getRecentLeads] failed:", error);
     return [];
   }
 }
@@ -134,7 +139,8 @@ export async function getRecentConversations(limit = 5) {
       .order("created_at", { ascending: false })
       .limit(limit);
     return data ?? [];
-  } catch {
+  } catch (error) {
+    console.error("[getRecentConversations] failed:", error);
     return [];
   }
 }

@@ -33,7 +33,8 @@ export async function getConversations(options?: {
       conversations: (data as ChatConversation[]) ?? [],
       total: count ?? 0,
     };
-  } catch {
+  } catch (error) {
+    console.error("[getConversations] failed:", error);
     return { conversations: [], total: 0 };
   }
 }
@@ -48,7 +49,8 @@ export async function getConversation(id: string) {
       .single();
     if (error) throw error;
     return data as ChatConversation;
-  } catch {
+  } catch (error) {
+    console.error("[getConversation] failed:", error);
     return null;
   }
 }

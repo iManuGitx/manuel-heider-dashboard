@@ -16,12 +16,8 @@ export default async function ConversationDetailPage({
 }) {
   const { id } = await params;
 
-  let conversation: ChatConversation;
-  try {
-    conversation = await getConversation(id);
-  } catch {
-    notFound();
-  }
+  const conversation = await getConversation(id);
+  if (!conversation) notFound();
 
   return (
     <div className="space-y-6">

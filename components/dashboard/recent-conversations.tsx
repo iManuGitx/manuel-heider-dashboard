@@ -1,14 +1,8 @@
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { StatusBadge } from "@/components/ui/status-badge";
 import { MessageSquare } from "lucide-react";
 import type { ChatConversation } from "@/types";
-
-const SENTIMENT_COLORS: Record<string, string> = {
-  positive: "bg-success/10 text-success border-success/20",
-  neutral: "bg-muted text-muted-foreground border-border",
-  negative: "bg-destructive/10 text-destructive border-destructive/20",
-};
 
 export function RecentConversations({
   conversations,
@@ -64,12 +58,7 @@ export function RecentConversations({
                 </p>
               </div>
               {conv.sentiment && (
-                <Badge
-                  variant="outline"
-                  className={SENTIMENT_COLORS[conv.sentiment] ?? ""}
-                >
-                  {conv.sentiment}
-                </Badge>
+                <StatusBadge status={conv.sentiment} />
               )}
             </Link>
           ))}
