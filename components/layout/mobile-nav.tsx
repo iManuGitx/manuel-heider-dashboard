@@ -27,7 +27,7 @@ export function MobileNav() {
       <SheetContent side="left" className="w-60 bg-sidebar p-0">
         <SheetTitle className="sr-only">Navigation</SheetTitle>
         <div className="flex h-16 items-center gap-3 border-b border-border px-5">
-          <Logo size={32} />
+          <Logo size={24} />
           <div>
             <p className="text-sm font-semibold">Manuel Heider</p>
             <p className="section-label text-[0.6rem]! opacity-60!">Dashboard</p>

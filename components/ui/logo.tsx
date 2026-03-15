@@ -9,9 +9,9 @@ export function Logo({
 }) {
   return (
     <svg
-      width={size}
+      width={size * (290 / 96)}
       height={size}
-      viewBox="0 0 512 512"
+      viewBox="0 0 290 96"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={cn("shrink-0", className)}
@@ -22,12 +22,10 @@ export function Logo({
           <stop offset="100%" stopColor="#06b6d4" />
         </linearGradient>
       </defs>
-      <rect width="512" height="512" rx="96" fill="#0c0c14" />
-      <rect width="512" height="512" rx="96" fill="none" stroke="rgba(124,58,237,0.25)" strokeWidth="3" />
       <path
-        d="M 66,96 L 66,416 M 66,96 L 196,256 L 326,96 L 326,416 M 326,256 L 446,256 M 446,96 L 446,416"
+        d="M 10,8 L 10,88 M 10,8 L 75,48 L 140,8 L 140,88 M 140,48 L 260,48 M 260,8 L 260,88"
         stroke="url(#logo-grad)"
-        strokeWidth="44"
+        strokeWidth="14"
         strokeLinecap="round"
         strokeLinejoin="round"
         fill="none"

@@ -44,7 +44,7 @@ function LoginForm() {
     <div className="glass-card w-full max-w-md rounded-2xl p-8">
       <div className="space-y-6 text-center">
         <div className="mx-auto w-fit">
-          <Logo size={56} />
+          <Logo size={40} />
         </div>
         <div>
           <h1
