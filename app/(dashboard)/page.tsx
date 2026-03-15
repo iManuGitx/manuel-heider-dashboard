@@ -21,14 +21,14 @@ function KpiSkeleton() {
   return (
     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
       {Array.from({ length: 4 }).map((_, i) => (
-        <Skeleton key={i} className="h-[100px] rounded-lg" />
+        <Skeleton key={i} className="h-25 rounded-lg" />
       ))}
     </div>
   );
 }
 
 function ChartSkeleton() {
-  return <Skeleton className="h-[330px] rounded-lg" />;
+  return <Skeleton className="h-82.5 rounded-lg" />;
 }
 
 async function KpiCards() {

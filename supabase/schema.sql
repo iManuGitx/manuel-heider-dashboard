@@ -15,21 +15,15 @@ CREATE TABLE profiles (
 
 ALTER TABLE profiles ENABLE ROW LEVEL SECURITY;
 
+-- Users can read their own profile
 CREATE POLICY "Users read own profile"
   ON profiles FOR SELECT
   USING (auth.uid() = id);
 
-CREATE POLICY "Admins read all profiles"
-  ON profiles FOR SELECT
-  USING (
-    EXISTS (SELECT 1 FROM profiles WHERE id = auth.uid() AND role = 'admin')
-  );
-
-CREATE POLICY "Admins update all profiles"
+-- Users can update their own profile
+CREATE POLICY "Users update own profile"
   ON profiles FOR UPDATE
-  USING (
-    EXISTS (SELECT 1 FROM profiles WHERE id = auth.uid() AND role = 'admin')
-  );
+  USING (auth.uid() = id);
 
 -- 2. Leads
 CREATE TABLE leads (

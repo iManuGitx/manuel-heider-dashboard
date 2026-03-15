@@ -16,30 +16,16 @@ export function Logo({
       xmlns="http://www.w3.org/2000/svg"
       className={cn("shrink-0", className)}
     >
-      <rect width="512" height="512" rx="96" fill="#0c0c14" />
       <defs>
-        <linearGradient
-          id="logo-grad"
-          x1="80"
-          y1="80"
-          x2="432"
-          y2="432"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop stopColor="#7c3aed" />
-          <stop offset="1" stopColor="#06b6d4" />
+        <linearGradient id="logo-grad" x1="0%" y1="50%" x2="100%" y2="50%">
+          <stop offset="0%" stopColor="#7c3aed" />
+          <stop offset="100%" stopColor="#06b6d4" />
         </linearGradient>
       </defs>
+      <rect width="512" height="512" rx="96" fill="#0c0c14" />
+      <rect width="512" height="512" rx="96" fill="none" stroke="rgba(124,58,237,0.25)" strokeWidth="3" />
       <path
-        d="M128 384V160l80 112 80-112v224"
-        stroke="url(#logo-grad)"
-        strokeWidth="44"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        fill="none"
-      />
-      <path
-        d="M320 384V192c0-35.3 28.7-64 64-64v0"
+        d="M 66,96 L 66,416 M 66,96 L 196,256 L 326,96 L 326,416 M 326,256 L 446,256 M 446,96 L 446,416"
         stroke="url(#logo-grad)"
         strokeWidth="44"
         strokeLinecap="round"

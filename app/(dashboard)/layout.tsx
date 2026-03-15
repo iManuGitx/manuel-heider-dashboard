@@ -10,26 +10,48 @@ export default async function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const isDevBypass =
+    process.env.NODE_ENV === "development" &&
+    process.env.DEV_BYPASS_AUTH === "true";
 
-  if (!user) redirect("/login");
+  let userProfile: Profile;
 
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("*")
-    .eq("id", user.id)
-    .single();
+  if (isDevBypass) {
+    userProfile = {
+      id: "dev",
+      email: "dev@localhost",
+      full_name: "Manuel Heider",
+      role: "admin",
+      avatar_url: null,
+    } as Profile;
+  } else {
+    const supabase = await createClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
 
-  if (!profile) redirect("/login");
+    if (!user) redirect("/login");
+
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("*")
+      .eq("id", user.id)
+      .single();
+
+    userProfile = (profile || {
+      id: user.id,
+      email: user.email || "",
+      full_name: user.user_metadata?.full_name || user.email || "",
+      role: "admin",
+      avatar_url: user.user_metadata?.avatar_url || null,
+    }) as Profile;
+  }
 
   return (
     <div className="min-h-screen bg-background">
       <Sidebar />
       <div className="md:ml-60">
-        <Header user={profile as Profile} />
+        <Header user={userProfile as Profile} />
         <main className="p-4 md:p-6">{children}</main>
       </div>
       <Toaster
