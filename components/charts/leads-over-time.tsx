@@ -17,7 +17,7 @@ interface Props {
 
 export function LeadsOverTimeChart({ data }: Props) {
   return (
-    <Card className="border-border">
+    <Card className="glass-card rounded-2xl">
       <CardHeader>
         <CardTitle className="text-sm font-medium">
           Leads (30 Tage)

@@ -17,7 +17,7 @@ export function RecentConversations({
 }) {
   if (conversations.length === 0) {
     return (
-      <Card className="border-border">
+      <Card className="glass-card rounded-2xl">
         <CardHeader>
           <CardTitle className="text-sm font-medium">
             Letzte Konversationen
@@ -33,7 +33,7 @@ export function RecentConversations({
   }
 
   return (
-    <Card className="border-border">
+    <Card className="glass-card rounded-2xl">
       <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle className="text-sm font-medium">
           Letzte Konversationen

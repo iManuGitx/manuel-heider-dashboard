@@ -13,7 +13,8 @@
       "Bash(pnpm dlx:*)",
       "WebFetch(domain:api.github.com)",
       "WebFetch(domain:raw.githubusercontent.com)",
-      "Bash(pnpm build:*)"
+      "Bash(pnpm build:*)",
+      "Bash(find . -name \"*.tsx\" -not -path \"*/node_modules/*\" -exec sed -i 's/Card className=\"\"border-border\"\"/Card className=\"\"glass-card rounded-2xl\"\"/g' {} +)"
     ]
   }
 }

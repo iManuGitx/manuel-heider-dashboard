@@ -15,7 +15,7 @@ const STATUS_COLORS: Record<string, string> = {
 export function RecentLeads({ leads }: { leads: Lead[] }) {
   if (leads.length === 0) {
     return (
-      <Card className="border-border">
+      <Card className="glass-card rounded-2xl">
         <CardHeader>
           <CardTitle className="text-sm font-medium">
             Neueste Leads
@@ -31,7 +31,7 @@ export function RecentLeads({ leads }: { leads: Lead[] }) {
   }
 
   return (
-    <Card className="border-border">
+    <Card className="glass-card rounded-2xl">
       <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle className="text-sm font-medium">Neueste Leads</CardTitle>
         <Link

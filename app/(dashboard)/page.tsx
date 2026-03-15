@@ -96,9 +96,7 @@ export default function DashboardPage() {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold">Übersicht</h1>
-        <p className="text-sm text-muted-foreground">
-          Willkommen im Admin Dashboard
-        </p>
+        <p className="section-label mt-1">Willkommen im Admin Dashboard</p>
       </div>
 
       <Suspense fallback={<KpiSkeleton />}>

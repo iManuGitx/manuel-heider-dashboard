@@ -37,7 +37,7 @@ export default async function SettingsPage() {
           <ProfileForm profile={profile as Profile} />
         </TabsContent>
         <TabsContent value="account">
-          <Card className="border-border">
+          <Card className="glass-card rounded-2xl">
             <CardHeader>
               <CardTitle className="text-sm">Konto</CardTitle>
             </CardHeader>

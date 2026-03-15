@@ -14,7 +14,7 @@ export function ConversationList({
         <Link
           key={conv.id}
           href={`/conversations/${conv.id}`}
-          className="flex items-center gap-4 rounded-lg border border-border p-4 transition-colors hover:bg-secondary/50"
+          className="glass-card glass-card-hover flex items-center gap-4 rounded-2xl p-4 transition-all"
         >
           <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10">
             <MessageSquare className="h-5 w-5 text-primary" />

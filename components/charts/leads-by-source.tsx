@@ -30,7 +30,7 @@ export function LeadsBySourceChart({ data }: Props) {
   }));
 
   return (
-    <Card className="border-border">
+    <Card className="glass-card rounded-2xl">
       <CardHeader>
         <CardTitle className="text-sm font-medium">
           Leads nach Quelle

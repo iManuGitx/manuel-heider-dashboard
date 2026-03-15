@@ -1,4 +1,3 @@
-import { Card, CardContent } from "@/components/ui/card";
 import type { LucideIcon } from "lucide-react";
 
 interface KpiCardProps {
@@ -10,19 +9,21 @@ interface KpiCardProps {
 
 export function KpiCard({ label, value, icon: Icon, trend }: KpiCardProps) {
   return (
-    <Card className="border-border">
-      <CardContent className="flex items-center gap-4 p-6">
-        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-primary/10">
+    <div className="glass-card glass-card-hover rounded-2xl p-6">
+      <div className="flex items-center gap-4">
+        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary/10">
           <Icon className="h-6 w-6 text-primary" />
         </div>
         <div>
-          <p className="text-sm text-muted-foreground">{label}</p>
-          <p className="text-2xl font-bold">{value}</p>
+          <p className="section-label">{label}</p>
+          <p className="mt-1 text-2xl font-bold" style={{ fontFamily: "var(--font-display), Syne, sans-serif" }}>
+            {value}
+          </p>
           {trend && (
             <p className="text-xs text-muted-foreground">{trend}</p>
           )}
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }

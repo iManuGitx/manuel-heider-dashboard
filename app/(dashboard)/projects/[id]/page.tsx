@@ -43,7 +43,7 @@ export default async function ProjectDetailPage({
 
       <div className="grid gap-6 lg:grid-cols-3">
         <div className="space-y-6 lg:col-span-2">
-          <Card className="border-border">
+          <Card className="glass-card rounded-2xl">
             <CardHeader>
               <CardTitle className="text-sm">Beschreibung</CardTitle>
             </CardHeader>
@@ -56,7 +56,7 @@ export default async function ProjectDetailPage({
         </div>
 
         <div className="space-y-4">
-          <Card className="border-border">
+          <Card className="glass-card rounded-2xl">
             <CardHeader>
               <CardTitle className="text-sm">Details</CardTitle>
             </CardHeader>

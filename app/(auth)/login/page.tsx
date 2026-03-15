@@ -2,10 +2,9 @@
 
 import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { Logo } from "@/components/ui/logo";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 import { Mail, Loader2 } from "lucide-react";
@@ -42,56 +41,62 @@ function LoginForm() {
   };
 
   return (
-    <Card className="w-full max-w-md border-border/50">
-      <CardHeader className="space-y-4 text-center">
-        <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10">
-          <span className="text-2xl font-bold text-primary">MH</span>
+    <div className="glass-card w-full max-w-md rounded-2xl p-8">
+      <div className="space-y-6 text-center">
+        <div className="mx-auto w-fit">
+          <Logo size={56} />
         </div>
         <div>
-          <h1 className="text-2xl font-bold">Manuel Heider</h1>
-          <p className="text-sm text-muted-foreground">
-            Admin Dashboard
-          </p>
+          <h1
+            className="gradient-text text-3xl font-bold"
+            style={{ fontFamily: "var(--font-display), Syne, sans-serif" }}
+          >
+            Manuel Heider
+          </h1>
+          <p className="section-label mt-2">Admin Dashboard</p>
         </div>
-      </CardHeader>
-      <CardContent className="space-y-4">
+      </div>
+
+      <div className="mt-8 space-y-4">
         {error === "unauthorized" && (
-          <div className="rounded-lg border border-destructive/50 bg-destructive/10 p-3 text-center text-sm text-destructive">
-            Zugriff verweigert. Nur Administratoren können sich anmelden.
+          <div className="rounded-xl border border-destructive/30 bg-destructive/10 p-3 text-center text-sm text-destructive backdrop-blur-sm">
+            Zugriff verweigert. Nur Administratoren haben Zugang.
           </div>
         )}
 
         {sent ? (
-          <div className="rounded-lg border border-success/50 bg-success/10 p-4 text-center">
-            <Mail className="mx-auto mb-2 h-8 w-8 text-success" />
-            <p className="font-medium text-success">Magic Link gesendet!</p>
-            <p className="mt-1 text-sm text-muted-foreground">
+          <div className="rounded-xl border border-success/30 bg-success/10 p-6 text-center backdrop-blur-sm">
+            <Mail className="mx-auto mb-3 h-10 w-10 text-success" />
+            <p className="font-semibold text-success" style={{ fontFamily: "var(--font-display), Syne, sans-serif" }}>
+              Magic Link gesendet!
+            </p>
+            <p className="mt-2 text-sm text-muted-foreground">
               Prüfe deine E-Mail ({email}) und klicke auf den Link.
             </p>
           </div>
         ) : (
           <>
-            <form onSubmit={handleMagicLink} className="space-y-3">
+            <form onSubmit={handleMagicLink} className="space-y-4">
               <Input
                 type="email"
                 placeholder="deine@email.de"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="bg-secondary"
+                className="h-11 rounded-xl border-border bg-[rgba(12,12,20,0.5)] text-foreground placeholder:text-muted-foreground focus:border-primary/50"
               />
-              <Button
+              <button
                 type="submit"
-                className="w-full"
                 disabled={loading}
+                className="btn-gradient flex h-11 w-full items-center justify-center gap-2 text-sm font-semibold text-white disabled:opacity-50"
               >
                 {loading ? (
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  <Loader2 className="h-4 w-4 animate-spin" />
                 ) : (
-                  <Mail className="mr-2 h-4 w-4" />
+                  <Mail className="h-4 w-4" />
                 )}
                 Magic Link senden
-              </Button>
+              </button>
             </form>
 
             <div className="flex items-center gap-3">
@@ -100,12 +105,11 @@ function LoginForm() {
               <Separator className="flex-1" />
             </div>
 
-            <Button
-              variant="outline"
-              className="w-full"
+            <button
               onClick={handleGoogleLogin}
+              className="btn-ghost-pill flex h-11 w-full items-center justify-center gap-2 bg-transparent text-sm font-medium text-foreground"
             >
-              <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24">
+              <svg className="h-4 w-4" viewBox="0 0 24 24">
                 <path
                   d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"
                   fill="#4285F4"
@@ -124,11 +128,11 @@ function LoginForm() {
                 />
               </svg>
               Mit Google anmelden
-            </Button>
+            </button>
           </>
         )}
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }
 

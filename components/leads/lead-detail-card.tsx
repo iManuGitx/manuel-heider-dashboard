@@ -65,7 +65,7 @@ export function LeadDetailCard({ lead }: { lead: Lead }) {
   return (
     <div className="grid gap-6 lg:grid-cols-3">
       <div className="space-y-6 lg:col-span-2">
-        <Card className="border-border">
+        <Card className="glass-card rounded-2xl">
           <CardHeader>
             <div className="flex items-center justify-between">
               <CardTitle>{lead.name || lead.email}</CardTitle>
@@ -150,7 +150,7 @@ export function LeadDetailCard({ lead }: { lead: Lead }) {
           </CardContent>
         </Card>
 
-        <Card className="border-border">
+        <Card className="glass-card rounded-2xl">
           <CardHeader>
             <CardTitle className="text-sm">Notizen</CardTitle>
           </CardHeader>
@@ -170,7 +170,7 @@ export function LeadDetailCard({ lead }: { lead: Lead }) {
       </div>
 
       <div>
-        <Card className="border-border">
+        <Card className="glass-card rounded-2xl">
           <CardHeader>
             <CardTitle className="text-sm">Status ändern</CardTitle>
           </CardHeader>

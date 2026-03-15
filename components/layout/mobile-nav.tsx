@@ -10,6 +10,7 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { SidebarNav } from "./sidebar-nav";
+import { Logo } from "@/components/ui/logo";
 
 export function MobileNav() {
   const [open, setOpen] = useState(false);
@@ -25,13 +26,11 @@ export function MobileNav() {
       </SheetTrigger>
       <SheetContent side="left" className="w-60 bg-sidebar p-0">
         <SheetTitle className="sr-only">Navigation</SheetTitle>
-        <div className="flex h-16 items-center gap-2 border-b border-border px-6">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10">
-            <span className="text-sm font-bold text-primary">MH</span>
-          </div>
+        <div className="flex h-16 items-center gap-3 border-b border-border px-5">
+          <Logo size={32} />
           <div>
             <p className="text-sm font-semibold">Manuel Heider</p>
-            <p className="text-xs text-muted-foreground">Dashboard</p>
+            <p className="section-label text-[0.6rem]! opacity-60!">Dashboard</p>
           </div>
         </div>
         <div className="py-4">

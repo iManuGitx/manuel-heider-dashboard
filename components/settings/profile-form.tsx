@@ -45,7 +45,7 @@ export function ProfileForm({ profile }: { profile: Profile }) {
   };
 
   return (
-    <Card className="border-border">
+    <Card className="glass-card rounded-2xl">
       <CardHeader>
         <CardTitle className="text-sm">Profil</CardTitle>
       </CardHeader>

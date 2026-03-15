@@ -37,9 +37,11 @@ export default async function DashboardLayout({
         position="bottom-right"
         toastOptions={{
           style: {
-            background: "#111118",
-            border: "1px solid rgba(124, 58, 237, 0.15)",
-            color: "#f3f4f6",
+            background: "rgba(12, 12, 20, 0.85)",
+            border: "1px solid rgba(124, 58, 237, 0.18)",
+            backdropFilter: "blur(12px)",
+            color: "#f0effe",
+            borderRadius: "14px",
           },
         }}
       />

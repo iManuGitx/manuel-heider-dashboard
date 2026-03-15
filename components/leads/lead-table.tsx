@@ -12,7 +12,7 @@ import type { Lead } from "@/types";
 
 export function LeadTable({ leads }: { leads: Lead[] }) {
   return (
-    <div className="rounded-lg border border-border">
+    <div className="glass-card overflow-hidden rounded-2xl">
       <Table>
         <TableHeader>
           <TableRow>

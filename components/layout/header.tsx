@@ -33,7 +33,7 @@ export function Header({ user }: { user: Profile }) {
     : user.email[0].toUpperCase();
 
   return (
-    <header className="sticky top-0 z-20 flex h-16 items-center justify-between border-b border-border bg-background/80 px-4 backdrop-blur-sm md:px-6">
+    <header className="sticky top-0 z-20 flex h-16 items-center justify-between border-b border-border bg-[rgba(5,5,10,0.75)] px-4 backdrop-blur-xl md:px-6">
       <MobileNav />
       <div className="flex-1" />
       <DropdownMenu>

@@ -7,7 +7,7 @@ import type { Project } from "@/types";
 export function ProjectCard({ project }: { project: Project }) {
   return (
     <Link href={`/projects/${project.id}`}>
-      <Card className="border-border transition-colors hover:bg-secondary/30">
+      <Card className="glass-card glass-card-hover rounded-2xl transition-all">
         <CardContent className="p-6">
           <div className="flex items-start justify-between">
             <div className="min-w-0">

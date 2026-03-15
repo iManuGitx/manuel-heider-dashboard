@@ -9,7 +9,7 @@ export default function AnalyticsPage() {
         title="Analytics"
         description="Website-Metriken und Analysen"
       />
-      <Card className="border-border">
+      <Card className="glass-card rounded-2xl">
         <CardContent className="flex flex-col items-center justify-center py-16">
           <BarChart3 className="mb-4 h-16 w-16 text-muted-foreground/30" />
           <h3 className="text-lg font-medium">Kommt in Phase 2</h3>

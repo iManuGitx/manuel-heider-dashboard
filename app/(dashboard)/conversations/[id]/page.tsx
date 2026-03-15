@@ -45,7 +45,7 @@ export default async function ConversationDetailPage({
 
       <div className="grid gap-6 lg:grid-cols-4">
         <div className="lg:col-span-3">
-          <Card className="border-border">
+          <Card className="glass-card rounded-2xl">
             <CardHeader>
               <CardTitle className="text-sm">Nachrichten</CardTitle>
             </CardHeader>
@@ -62,7 +62,7 @@ export default async function ConversationDetailPage({
         </div>
 
         <div className="space-y-4">
-          <Card className="border-border">
+          <Card className="glass-card rounded-2xl">
             <CardHeader>
               <CardTitle className="text-sm">Details</CardTitle>
             </CardHeader>
