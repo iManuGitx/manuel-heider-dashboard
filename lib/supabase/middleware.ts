@@ -49,15 +49,20 @@ export async function updateSession(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
-  // Logged in — check admin role
+  // Logged in — check admin role (from app_metadata first, then profiles table)
   if (user) {
-    const { data: profile } = await supabase
-      .from("profiles")
-      .select("role")
-      .eq("id", user.id)
-      .single();
+    let isAdmin = user.app_metadata?.role === "admin";
 
-    if (!profile || profile.role !== "admin") {
+    if (!isAdmin) {
+      const { data: profile } = await supabase
+        .from("profiles")
+        .select("role")
+        .eq("id", user.id)
+        .single();
+      isAdmin = profile?.role === "admin";
+    }
+
+    if (!isAdmin) {
       await supabase.auth.signOut();
       const url = request.nextUrl.clone();
       url.pathname = "/login";
