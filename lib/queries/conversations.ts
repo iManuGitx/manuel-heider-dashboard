@@ -4,6 +4,10 @@ import type { ChatConversation } from "@/types";
 export async function getConversations(options?: {
   sentiment?: string;
   search?: string;
+  locale?: string;
+  hasLead?: string;
+  dateFrom?: string;
+  dateTo?: string;
   page?: number;
   limit?: number;
 }) {
@@ -23,8 +27,24 @@ export async function getConversations(options?: {
     if (options?.sentiment) {
       query = query.eq("sentiment", options.sentiment);
     }
+    if (options?.locale) {
+      query = query.eq("locale", options.locale);
+    }
+    if (options?.hasLead === "yes") {
+      query = query.not("lead_id", "is", null);
+    } else if (options?.hasLead === "no") {
+      query = query.is("lead_id", null);
+    }
+    if (options?.dateFrom) {
+      query = query.gte("created_at", options.dateFrom);
+    }
+    if (options?.dateTo) {
+      query = query.lte("created_at", `${options.dateTo}T23:59:59`);
+    }
     if (options?.search) {
-      query = query.ilike("summary", `%${options.search}%`);
+      query = query.or(
+        `summary.ilike.%${options.search}%,messages::text.ilike.%${options.search}%`
+      );
     }
 
     const { data, count, error } = await query;
@@ -52,5 +72,37 @@ export async function getConversation(id: string) {
   } catch (error) {
     console.error("[getConversation] failed:", error);
     return null;
+  }
+}
+
+export async function getChatStats() {
+  try {
+    const supabase = await createClient();
+    const now = new Date();
+    const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()).toISOString();
+    const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000).toISOString();
+
+    const [totalRes, todayRes, weekRes] = await Promise.all([
+      supabase
+        .from("chat_conversations")
+        .select("id", { count: "exact", head: true }),
+      supabase
+        .from("chat_conversations")
+        .select("id", { count: "exact", head: true })
+        .gte("created_at", todayStart),
+      supabase
+        .from("chat_conversations")
+        .select("id", { count: "exact", head: true })
+        .gte("created_at", weekAgo),
+    ]);
+
+    return {
+      total: totalRes.count ?? 0,
+      today: todayRes.count ?? 0,
+      thisWeek: weekRes.count ?? 0,
+    };
+  } catch (error) {
+    console.error("[getChatStats] failed:", error);
+    return { total: 0, today: 0, thisWeek: 0 };
   }
 }

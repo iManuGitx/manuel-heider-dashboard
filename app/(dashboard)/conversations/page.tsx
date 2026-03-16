@@ -1,7 +1,8 @@
 import { Suspense } from "react";
 import { getConversations } from "@/lib/queries/conversations";
 import { PageHeader } from "@/components/ui/page-header";
-import { ConversationList } from "@/components/conversations/conversation-list";
+import { ConversationTable } from "@/components/conversations/conversation-table";
+import { ConversationFilters } from "@/components/conversations/conversation-filters";
 import { EmptyState } from "@/components/ui/empty-state";
 import { Skeleton } from "@/components/ui/skeleton";
 import { buttonVariants } from "@/components/ui/button";
@@ -13,6 +14,10 @@ interface Props {
   searchParams: Promise<{
     sentiment?: string;
     search?: string;
+    locale?: string;
+    hasLead?: string;
+    dateFrom?: string;
+    dateTo?: string;
     page?: string;
   }>;
 }
@@ -24,6 +29,10 @@ async function ConversationsList({ searchParams }: Props) {
   const { conversations, total } = await getConversations({
     sentiment: params.sentiment,
     search: params.search,
+    locale: params.locale,
+    hasLead: params.hasLead,
+    dateFrom: params.dateFrom,
+    dateTo: params.dateTo,
     page,
     limit: 20,
   });
@@ -35,14 +44,14 @@ async function ConversationsList({ searchParams }: Props) {
       <EmptyState
         icon={MessageSquare}
         title="Keine Konversationen"
-        description="Es gibt noch keine Chatbot-Konversationen."
+        description="Es gibt noch keine Chatbot-Konversationen oder deine Filter ergeben keine Treffer."
       />
     );
   }
 
   return (
     <>
-      <ConversationList conversations={conversations} />
+      <ConversationTable conversations={conversations} />
       {totalPages > 1 && (
         <div className="flex items-center justify-between pt-4">
           <p className="text-sm text-muted-foreground">
@@ -81,9 +90,12 @@ export default function ConversationsPage(props: Props) {
   return (
     <div className="space-y-6">
       <PageHeader
-        title="Konversationen"
+        title="Chat Conversations"
         description="Chatbot-Konversationen von der Website"
       />
+      <Suspense fallback={null}>
+        <ConversationFilters />
+      </Suspense>
       <Suspense fallback={<Skeleton className="h-100 rounded-lg" />}>
         <ConversationsList searchParams={props.searchParams} />
       </Suspense>

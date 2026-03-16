@@ -5,7 +5,6 @@ import { LeadsOverTimeChart } from "@/components/charts/leads-over-time";
 import { LeadsBySourceChart } from "@/components/charts/leads-by-source";
 import { LeadStatusDistributionChart } from "@/components/charts/lead-status-distribution";
 import { RecentLeads } from "@/components/dashboard/recent-leads";
-import { RecentConversations } from "@/components/dashboard/recent-conversations";
 import {
   getDashboardStats,
   getLeadsOverTime,
@@ -14,6 +13,8 @@ import {
   getRecentLeads,
   getRecentConversations,
 } from "@/lib/queries/dashboard";
+import { getChatStats } from "@/lib/queries/conversations";
+import { ChatStatsWidget } from "@/components/dashboard/chat-stats-widget";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { Lead, ChatConversation } from "@/types";
 
@@ -78,15 +79,19 @@ async function ChartsSection() {
 }
 
 async function RecentSection() {
-  const [leads, conversations] = await Promise.all([
+  const [leads, conversations, chatStats] = await Promise.all([
     getRecentLeads(),
     getRecentConversations(),
+    getChatStats(),
   ]);
 
   return (
     <div className="grid gap-4 lg:grid-cols-2">
       <RecentLeads leads={leads as Lead[]} />
-      <RecentConversations conversations={conversations as ChatConversation[]} />
+      <ChatStatsWidget
+        recentChats={conversations as ChatConversation[]}
+        stats={chatStats}
+      />
     </div>
   );
 }

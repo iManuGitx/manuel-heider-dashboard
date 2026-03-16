@@ -1,13 +1,25 @@
 import { getConversation } from "@/lib/queries/conversations";
+import { getLead } from "@/lib/queries/leads";
 import { MessageThread } from "@/components/conversations/message-thread";
+import { ToolCallsPanel } from "@/components/conversations/tool-calls-panel";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { ArrowLeft, Globe, Clock, Hash } from "lucide-react";
+import {
+  ArrowLeft,
+  Globe,
+  Clock,
+  Hash,
+  MessageSquare,
+  User,
+  Mail,
+  Building,
+  Wrench,
+} from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import type { ChatConversation } from "@/types";
 
 export default async function ConversationDetailPage({
   params,
@@ -19,10 +31,21 @@ export default async function ConversationDetailPage({
   const conversation = await getConversation(id);
   if (!conversation) notFound();
 
+  const lead = conversation.lead_id
+    ? await getLead(conversation.lead_id)
+    : null;
+
+  const toolCalls = Array.isArray(conversation.tool_calls)
+    ? conversation.tool_calls
+    : [];
+
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-4">
-        <Link href="/conversations" className={cn(buttonVariants({ variant: "ghost", size: "icon" }))}>
+        <Link
+          href="/conversations"
+          className={cn(buttonVariants({ variant: "ghost", size: "icon" }))}
+        >
           <ArrowLeft className="h-4 w-4" />
         </Link>
         <div className="flex-1">
@@ -34,16 +57,22 @@ export default async function ConversationDetailPage({
             Konversations-Details
           </p>
         </div>
+        <Badge variant="outline" className="uppercase">
+          {conversation.locale}
+        </Badge>
         {conversation.sentiment && (
           <StatusBadge status={conversation.sentiment} />
         )}
       </div>
 
       <div className="grid gap-6 lg:grid-cols-4">
-        <div className="lg:col-span-3">
+        <div className="space-y-6 lg:col-span-3">
           <Card className="glass-card rounded-2xl">
             <CardHeader>
-              <CardTitle className="text-sm">Nachrichten</CardTitle>
+              <CardTitle className="flex items-center gap-2 text-sm">
+                <MessageSquare className="h-4 w-4" />
+                Nachrichten ({conversation.messages.length})
+              </CardTitle>
             </CardHeader>
             <CardContent>
               {conversation.messages.length > 0 ? (
@@ -55,6 +84,20 @@ export default async function ConversationDetailPage({
               )}
             </CardContent>
           </Card>
+
+          {toolCalls.length > 0 && (
+            <Card className="glass-card rounded-2xl">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2 text-sm">
+                  <Wrench className="h-4 w-4" />
+                  Tool Calls ({toolCalls.length})
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ToolCallsPanel toolCalls={toolCalls} />
+              </CardContent>
+            </Card>
+          )}
         </div>
 
         <div className="space-y-4">
@@ -74,6 +117,11 @@ export default async function ConversationDetailPage({
                 <Globe className="h-4 w-4 text-muted-foreground" />
                 <span className="text-muted-foreground">Sprache:</span>
                 <span>{conversation.locale.toUpperCase()}</span>
+              </div>
+              <div className="flex items-center gap-2 text-sm">
+                <MessageSquare className="h-4 w-4 text-muted-foreground" />
+                <span className="text-muted-foreground">Nachrichten:</span>
+                <span>{conversation.messages.length}</span>
               </div>
               <div className="flex items-center gap-2 text-sm">
                 <Clock className="h-4 w-4 text-muted-foreground" />
@@ -102,8 +150,57 @@ export default async function ConversationDetailPage({
             </CardContent>
           </Card>
 
-          {conversation.lead_id && (
-            <Link href={`/leads/${conversation.lead_id}`} className={cn(buttonVariants({ variant: "outline" }), "w-full")}>
+          {lead && (
+            <Card className="glass-card rounded-2xl">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2 text-sm">
+                  <User className="h-4 w-4" />
+                  Verknüpfter Lead
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                {lead.name && (
+                  <div className="flex items-center gap-2 text-sm">
+                    <User className="h-4 w-4 text-muted-foreground" />
+                    <span>{lead.name}</span>
+                  </div>
+                )}
+                <div className="flex items-center gap-2 text-sm">
+                  <Mail className="h-4 w-4 text-muted-foreground" />
+                  <a
+                    href={`mailto:${lead.email}`}
+                    className="text-primary hover:underline"
+                  >
+                    {lead.email}
+                  </a>
+                </div>
+                {lead.company && (
+                  <div className="flex items-center gap-2 text-sm">
+                    <Building className="h-4 w-4 text-muted-foreground" />
+                    <span>{lead.company}</span>
+                  </div>
+                )}
+                <div className="pt-1">
+                  <StatusBadge status={lead.status} />
+                </div>
+                <Link
+                  href={`/leads/${lead.id}`}
+                  className={cn(
+                    buttonVariants({ variant: "outline", size: "sm" }),
+                    "w-full"
+                  )}
+                >
+                  Lead-Details anzeigen
+                </Link>
+              </CardContent>
+            </Card>
+          )}
+
+          {!lead && conversation.lead_id && (
+            <Link
+              href={`/leads/${conversation.lead_id}`}
+              className={cn(buttonVariants({ variant: "outline" }), "w-full")}
+            >
               Verknüpften Lead anzeigen
             </Link>
           )}
