@@ -54,7 +54,8 @@ export async function getConversations(options?: {
       total: count ?? 0,
     };
   } catch (error) {
-    console.error("[getConversations] failed:", error);
+    const e = error as { message?: string; code?: string; details?: string };
+    console.error("[getConversations] failed:", JSON.stringify({ message: e.message, code: e.code, details: e.details }));
     return { conversations: [], total: 0 };
   }
 }
