@@ -59,7 +59,7 @@ export function ChatStatsWidget({ recentChats, stats }: ChatStatsWidgetProps) {
                       `Session ${conv.session_id.slice(0, 8)}...`}
                   </p>
                   <p className="text-xs text-muted-foreground">
-                    {conv.messages.length} Nachrichten &middot;{" "}
+                    {conv.messages?.length ?? 0} Nachrichten &middot;{" "}
                     {conv.locale.toUpperCase()} &middot;{" "}
                     {new Date(conv.created_at).toLocaleDateString("de-DE")}
                   </p>
