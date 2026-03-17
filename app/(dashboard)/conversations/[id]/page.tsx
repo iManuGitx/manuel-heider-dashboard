@@ -139,6 +139,18 @@ export default async function ConversationDetailPage({
                   )}
                 </span>
               </div>
+              {conversation.lead_email && (
+                <div className="flex items-center gap-2 text-sm">
+                  <Mail className="h-4 w-4 text-muted-foreground" />
+                  <span className="text-muted-foreground">Lead E-Mail:</span>
+                  <a
+                    href={`mailto:${conversation.lead_email}`}
+                    className="text-primary hover:underline"
+                  >
+                    {conversation.lead_email}
+                  </a>
+                </div>
+              )}
               {conversation.visitor_ip && (
                 <div className="text-sm">
                   <span className="text-muted-foreground">IP:</span>{" "}

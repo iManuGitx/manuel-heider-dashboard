@@ -24,6 +24,11 @@ export function ConversationList({
               {conv.summary ||
                 `Session ${conv.session_id.slice(0, 12)}...`}
             </p>
+            {conv.lead_email && (
+              <span className="inline-block rounded bg-primary/10 px-1.5 py-0.5 text-xs text-primary">
+                {conv.lead_email}
+              </span>
+            )}
             <div className="flex items-center gap-2 text-xs text-muted-foreground">
               <span>{conv.messages.length} Nachrichten</span>
               <span>&middot;</span>
