@@ -72,11 +72,11 @@ export default async function ConversationDetailPage({
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-sm">
                 <MessageSquare className="h-4 w-4" />
-                Nachrichten ({conversation.message_count ?? conversation.messages.length})
+                Nachrichten ({conversation.message_count ?? conversation.messages?.length ?? 0})
               </CardTitle>
             </CardHeader>
             <CardContent>
-              {conversation.messages.length > 0 ? (
+              {conversation.messages?.length > 0 ? (
                 <MessageThread messages={conversation.messages} />
               ) : (
                 <p className="text-sm text-muted-foreground">
@@ -122,7 +122,7 @@ export default async function ConversationDetailPage({
               <div className="flex items-center gap-2 text-sm">
                 <MessageSquare className="h-4 w-4 text-muted-foreground" />
                 <span className="text-muted-foreground">Nachrichten:</span>
-                <span>{conversation.message_count ?? conversation.messages.length}</span>
+                <span>{conversation.message_count ?? conversation.messages?.length ?? 0}</span>
               </div>
               <div className="flex items-center gap-2 text-sm">
                 <Clock className="h-4 w-4 text-muted-foreground" />

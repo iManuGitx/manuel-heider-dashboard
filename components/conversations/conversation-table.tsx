@@ -37,7 +37,8 @@ const TOOL_ICONS: Record<string, { icon: typeof UserPlus; title: string }> = {
   schedule_call: { icon: CalendarClock, title: "Anruf geplant" },
 };
 
-function ToolBadges({ toolCalls }: { toolCalls: Record<string, unknown>[] }) {
+function ToolBadges({ toolCalls }: { toolCalls: Record<string, unknown>[] | null }) {
+  if (!toolCalls || !Array.isArray(toolCalls)) return null;
   const usedTools = new Set(
     toolCalls
       .map((tc) => tc.name as string)
@@ -107,7 +108,7 @@ export function ConversationTable({
                 {conv.summary || `Session ${conv.session_id.slice(0, 12)}...`}
               </TableCell>
               <TableCell className="hidden md:table-cell text-muted-foreground">
-                {conv.message_count ?? conv.messages.length}
+                {conv.message_count ?? conv.messages?.length ?? 0}
               </TableCell>
               <TableCell className="hidden lg:table-cell text-sm">
                 {conv.lead_email ? (
@@ -124,7 +125,7 @@ export function ConversationTable({
                 </Badge>
               </TableCell>
               <TableCell className="hidden xl:table-cell">
-                <ToolBadges toolCalls={conv.tool_calls} />
+                <ToolBadges toolCalls={conv.tool_calls ?? []} />
               </TableCell>
             </TableRow>
           ))}
