@@ -16,7 +16,7 @@ export function KpiCard({ label, value, icon: Icon, trend }: KpiCardProps) {
         </div>
         <div>
           <p className="section-label">{label}</p>
-          <p className="mt-1 text-2xl font-bold" style={{ fontFamily: "var(--font-display), Syne, sans-serif" }}>
+          <p className="mt-1 text-2xl font-semibold tracking-tight">
             {value}
           </p>
           {trend && (
