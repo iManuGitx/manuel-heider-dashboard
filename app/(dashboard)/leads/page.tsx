@@ -5,7 +5,7 @@ import { LeadFilters } from "@/components/leads/lead-filters";
 import { LeadTable } from "@/components/leads/lead-table";
 import { EmptyState } from "@/components/ui/empty-state";
 import { Skeleton } from "@/components/ui/skeleton";
-import { buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button-variants";
 import { cn } from "@/lib/utils";
 import { Users, ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";

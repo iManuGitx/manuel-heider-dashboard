@@ -1,6 +1,6 @@
 import { getLead } from "@/lib/queries/leads";
 import { LeadDetailCard } from "@/components/leads/lead-detail-card";
-import { buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button-variants";
 import { cn } from "@/lib/utils";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";

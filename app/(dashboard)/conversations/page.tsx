@@ -5,7 +5,7 @@ import { ConversationTable } from "@/components/conversations/conversation-table
 import { ConversationFilters } from "@/components/conversations/conversation-filters";
 import { EmptyState } from "@/components/ui/empty-state";
 import { Skeleton } from "@/components/ui/skeleton";
-import { buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button-variants";
 import { cn } from "@/lib/utils";
 import { MessageSquare, ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
