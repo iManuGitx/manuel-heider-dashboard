@@ -8,20 +8,21 @@ export async function getConversations(options?: {
   hasLead?: string;
   dateFrom?: string;
   dateTo?: string;
+  period?: string;
   page?: number;
   limit?: number;
 }) {
   try {
     const supabase = await createClient();
     const page = options?.page ?? 1;
-    const limit = options?.limit ?? 20;
+    const limit = options?.limit ?? 25;
     const from = (page - 1) * limit;
     const to = from + limit - 1;
 
     let query = supabase
       .from("chat_conversations")
       .select("*", { count: "exact" })
-      .order("created_at", { ascending: false })
+      .order("updated_at", { ascending: false })
       .range(from, to);
 
     if (options?.sentiment) {
@@ -35,6 +36,20 @@ export async function getConversations(options?: {
     } else if (options?.hasLead === "no") {
       query = query.is("lead_id", null).is("lead_email", null);
     }
+    if (options?.period) {
+      const now = new Date();
+      let periodStart: Date | null = null;
+      if (options.period === "today") {
+        periodStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      } else if (options.period === "7d") {
+        periodStart = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+      } else if (options.period === "30d") {
+        periodStart = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+      }
+      if (periodStart) {
+        query = query.gte("created_at", periodStart.toISOString());
+      }
+    }
     if (options?.dateFrom) {
       query = query.gte("created_at", options.dateFrom);
     }
@@ -43,7 +58,7 @@ export async function getConversations(options?: {
     }
     if (options?.search) {
       query = query.or(
-        `summary.ilike.%${options.search}%,messages::text.ilike.%${options.search}%`
+        `summary.ilike.%${options.search}%,lead_email.ilike.%${options.search}%`
       );
     }
 
