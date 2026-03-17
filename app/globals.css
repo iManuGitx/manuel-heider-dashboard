@@ -197,14 +197,14 @@
     box-shadow: 0 0 16px rgba(124, 58, 237, 0.15);
   }
 
-  /* Section label like original */
+  /* Section label — clean uppercase */
   .section-label {
-    font-family: var(--font-mono), "Space Mono", monospace;
-    font-size: 0.75rem;
-    letter-spacing: 0.15em;
+    font-family: var(--font-body), "DM Sans", sans-serif;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: #06b6d4;
-    opacity: 0.85;
+    color: rgba(240, 239, 254, 0.45);
   }
 
   /* Subtle noise overlay */
