@@ -31,9 +31,9 @@ export async function getConversations(options?: {
       query = query.eq("locale", options.locale);
     }
     if (options?.hasLead === "yes") {
-      query = query.not("lead_id", "is", null);
+      query = query.or("lead_id.not.is.null,lead_email.not.is.null");
     } else if (options?.hasLead === "no") {
-      query = query.is("lead_id", null);
+      query = query.is("lead_id", null).is("lead_email", null);
     }
     if (options?.dateFrom) {
       query = query.gte("created_at", options.dateFrom);

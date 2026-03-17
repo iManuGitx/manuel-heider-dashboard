@@ -57,6 +57,7 @@ CREATE TABLE chat_conversations (
   visitor_ip TEXT,
   locale TEXT DEFAULT 'de',
   lead_id UUID REFERENCES leads(id),
+  lead_email TEXT,
   messages JSONB NOT NULL DEFAULT '[]',
   tool_calls JSONB DEFAULT '[]',
   summary TEXT,

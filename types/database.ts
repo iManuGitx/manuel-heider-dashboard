@@ -52,6 +52,7 @@ export interface ChatConversation {
   visitor_ip: string | null;
   locale: string;
   lead_id: string | null;
+  lead_email: string | null;
   messages: ChatMessage[];
   tool_calls: Record<string, unknown>[];
   summary: string | null;

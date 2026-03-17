@@ -24,6 +24,7 @@ export function ConversationTable({
             <TableHead className="hidden sm:table-cell">Sprache</TableHead>
             <TableHead className="hidden md:table-cell">Nachrichten</TableHead>
             <TableHead>Summary</TableHead>
+            <TableHead className="hidden lg:table-cell">Lead E-Mail</TableHead>
             <TableHead className="hidden lg:table-cell">Lead</TableHead>
           </TableRow>
         </TableHeader>
@@ -57,6 +58,13 @@ export function ConversationTable({
               </TableCell>
               <TableCell className="max-w-[300px] truncate text-muted-foreground">
                 {conv.summary || `Session ${conv.session_id.slice(0, 12)}...`}
+              </TableCell>
+              <TableCell className="hidden lg:table-cell text-sm">
+                {conv.lead_email ? (
+                  <span>{conv.lead_email}</span>
+                ) : (
+                  <span className="text-muted-foreground">—</span>
+                )}
               </TableCell>
               <TableCell className="hidden lg:table-cell">
                 {conv.lead_id ? (
