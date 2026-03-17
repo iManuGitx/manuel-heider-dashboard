@@ -56,7 +56,7 @@ export function ConversationList({
             <div className="min-w-0 flex-1">
               <p className="truncate font-medium">
                 {conv.summary ||
-                  `Session ${conv.session_id.slice(0, 12)}...`}
+                  `Session ${conv.session_id?.slice(0, 12) ?? "—"}...`}
               </p>
               <div className="mt-1 flex flex-wrap items-center gap-2">
                 {conv.lead_email && (
@@ -84,7 +84,7 @@ export function ConversationList({
               <div className="mt-1 flex items-center gap-2 text-xs text-muted-foreground">
                 <span>{conv.message_count ?? conv.messages?.length ?? 0} Nachrichten</span>
                 <span>&middot;</span>
-                <span>{conv.locale === "de" ? "🇩🇪 DE" : conv.locale === "en" ? "🇬🇧 EN" : conv.locale.toUpperCase()}</span>
+                <span>{conv.locale === "de" ? "🇩🇪 DE" : conv.locale === "en" ? "🇬🇧 EN" : (conv.locale ?? "de").toUpperCase()}</span>
                 <span>&middot;</span>
                 <span>{getRelativeTime(conv.updated_at)}</span>
               </div>

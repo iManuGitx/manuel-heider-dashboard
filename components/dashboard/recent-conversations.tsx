@@ -50,7 +50,7 @@ export function RecentConversations({
               <MessageSquare className="h-4 w-4 shrink-0 text-muted-foreground" />
               <div className="min-w-0 flex-1">
                 <p className="truncate text-sm">
-                  {conv.summary || `Session ${conv.session_id.slice(0, 8)}...`}
+                  {conv.summary || `Session ${conv.session_id?.slice(0, 8) ?? "—"}...`}
                 </p>
                 <p className="text-xs text-muted-foreground">
                   {conv.messages?.length ?? 0} Nachrichten &middot;{" "}
