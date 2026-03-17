@@ -37,8 +37,9 @@ export function ConversationList({
   return (
     <div className="space-y-2">
       {conversations.map((conv) => {
+        const toolCalls = Array.isArray(conv.tool_calls) ? conv.tool_calls : [];
         const usedTools = new Set(
-          conv.tool_calls
+          toolCalls
             .map((tc) => tc.name as string)
             .filter((name) => name && name in TOOL_ICONS)
         );
@@ -81,7 +82,7 @@ export function ConversationList({
                 )}
               </div>
               <div className="mt-1 flex items-center gap-2 text-xs text-muted-foreground">
-                <span>{conv.message_count ?? conv.messages.length} Nachrichten</span>
+                <span>{conv.message_count ?? conv.messages?.length ?? 0} Nachrichten</span>
                 <span>&middot;</span>
                 <span>{conv.locale === "de" ? "🇩🇪 DE" : conv.locale === "en" ? "🇬🇧 EN" : conv.locale.toUpperCase()}</span>
                 <span>&middot;</span>
