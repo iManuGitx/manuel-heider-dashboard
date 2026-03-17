@@ -17,6 +17,7 @@ import {
   Mail,
   Building,
   Wrench,
+  Monitor,
 } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -58,7 +59,7 @@ export default async function ConversationDetailPage({
           </p>
         </div>
         <Badge variant="outline" className="uppercase">
-          {conversation.locale}
+          {conversation.locale === "de" ? "🇩🇪 DE" : conversation.locale === "en" ? "🇬🇧 EN" : conversation.locale.toUpperCase()}
         </Badge>
         {conversation.sentiment && (
           <StatusBadge status={conversation.sentiment} />
@@ -71,7 +72,7 @@ export default async function ConversationDetailPage({
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-sm">
                 <MessageSquare className="h-4 w-4" />
-                Nachrichten ({conversation.messages.length})
+                Nachrichten ({conversation.message_count ?? conversation.messages.length})
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -116,18 +117,34 @@ export default async function ConversationDetailPage({
               <div className="flex items-center gap-2 text-sm">
                 <Globe className="h-4 w-4 text-muted-foreground" />
                 <span className="text-muted-foreground">Sprache:</span>
-                <span>{conversation.locale.toUpperCase()}</span>
+                <span>{conversation.locale === "de" ? "Deutsch" : conversation.locale === "en" ? "English" : conversation.locale.toUpperCase()}</span>
               </div>
               <div className="flex items-center gap-2 text-sm">
                 <MessageSquare className="h-4 w-4 text-muted-foreground" />
                 <span className="text-muted-foreground">Nachrichten:</span>
-                <span>{conversation.messages.length}</span>
+                <span>{conversation.message_count ?? conversation.messages.length}</span>
               </div>
               <div className="flex items-center gap-2 text-sm">
                 <Clock className="h-4 w-4 text-muted-foreground" />
                 <span className="text-muted-foreground">Erstellt:</span>
                 <span>
                   {new Date(conversation.created_at).toLocaleDateString(
+                    "de-DE",
+                    {
+                      day: "2-digit",
+                      month: "long",
+                      year: "numeric",
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    }
+                  )}
+                </span>
+              </div>
+              <div className="flex items-center gap-2 text-sm">
+                <Clock className="h-4 w-4 text-muted-foreground" />
+                <span className="text-muted-foreground">Aktualisiert:</span>
+                <span>
+                  {new Date(conversation.updated_at).toLocaleDateString(
                     "de-DE",
                     {
                       day: "2-digit",
@@ -152,11 +169,18 @@ export default async function ConversationDetailPage({
                 </div>
               )}
               {conversation.visitor_ip && (
-                <div className="text-sm">
-                  <span className="text-muted-foreground">IP:</span>{" "}
+                <div className="flex items-center gap-2 text-sm">
+                  <Monitor className="h-4 w-4 text-muted-foreground" />
+                  <span className="text-muted-foreground">IP:</span>
                   <span className="font-mono text-xs">
                     {conversation.visitor_ip}
                   </span>
+                </div>
+              )}
+              {conversation.sentiment && (
+                <div className="flex items-center gap-2 text-sm">
+                  <span className="text-muted-foreground">Stimmung:</span>
+                  <StatusBadge status={conversation.sentiment} />
                 </div>
               )}
             </CardContent>

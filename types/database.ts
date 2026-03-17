@@ -57,6 +57,7 @@ export interface ChatConversation {
   tool_calls: Record<string, unknown>[];
   summary: string | null;
   sentiment: Sentiment | null;
+  message_count: number;
   created_at: string;
   updated_at: string;
 }
