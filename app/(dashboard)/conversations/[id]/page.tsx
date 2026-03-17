@@ -52,14 +52,14 @@ export default async function ConversationDetailPage({
         <div className="flex-1">
           <h1 className="text-2xl font-bold">
             {conversation.summary ||
-              `Session ${conversation.session_id.slice(0, 12)}`}
+              `Session ${conversation.session_id?.slice(0, 12) ?? "—"}`}
           </h1>
           <p className="text-sm text-muted-foreground">
             Konversations-Details
           </p>
         </div>
         <Badge variant="outline" className="uppercase">
-          {conversation.locale === "de" ? "🇩🇪 DE" : conversation.locale === "en" ? "🇬🇧 EN" : conversation.locale.toUpperCase()}
+          {conversation.locale === "de" ? "🇩🇪 DE" : conversation.locale === "en" ? "🇬🇧 EN" : (conversation.locale ?? "de").toUpperCase()}
         </Badge>
         {conversation.sentiment && (
           <StatusBadge status={conversation.sentiment} />
@@ -117,7 +117,7 @@ export default async function ConversationDetailPage({
               <div className="flex items-center gap-2 text-sm">
                 <Globe className="h-4 w-4 text-muted-foreground" />
                 <span className="text-muted-foreground">Sprache:</span>
-                <span>{conversation.locale === "de" ? "Deutsch" : conversation.locale === "en" ? "English" : conversation.locale.toUpperCase()}</span>
+                <span>{conversation.locale === "de" ? "Deutsch" : conversation.locale === "en" ? "English" : (conversation.locale ?? "de").toUpperCase()}</span>
               </div>
               <div className="flex items-center gap-2 text-sm">
                 <MessageSquare className="h-4 w-4 text-muted-foreground" />

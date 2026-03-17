@@ -105,7 +105,7 @@ export function ConversationTable({
                 )}
               </TableCell>
               <TableCell className="max-w-[300px] truncate text-muted-foreground">
-                {conv.summary || `Session ${conv.session_id.slice(0, 12)}...`}
+                {conv.summary || `Session ${conv.session_id?.slice(0, 12) ?? "—"}...`}
               </TableCell>
               <TableCell className="hidden md:table-cell text-muted-foreground">
                 {conv.message_count ?? conv.messages?.length ?? 0}
@@ -121,7 +121,7 @@ export function ConversationTable({
               </TableCell>
               <TableCell className="hidden sm:table-cell">
                 <Badge variant="outline" className="uppercase text-xs">
-                  {conv.locale === "de" ? "🇩🇪 DE" : conv.locale === "en" ? "🇬🇧 EN" : conv.locale.toUpperCase()}
+                  {conv.locale === "de" ? "🇩🇪 DE" : conv.locale === "en" ? "🇬🇧 EN" : (conv.locale ?? "de").toUpperCase()}
                 </Badge>
               </TableCell>
               <TableCell className="hidden xl:table-cell">
