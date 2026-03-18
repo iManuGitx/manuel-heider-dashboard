@@ -7,16 +7,19 @@ import type { Profile } from "@/types/database";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { UserPlus, Mail, User } from "lucide-react";
+import { UserPlus, Mail, User, CreditCard, Check, X } from "lucide-react";
 import { toast } from "sonner";
 
-export function ClientsView({ clients }: { clients: Profile[] }) {
+export function ClientsView({ clients: initialClients }: { clients: Profile[] }) {
   const router = useRouter();
+  const [clients, setClients] = useState(initialClients);
   const [showForm, setShowForm] = useState(false);
   const [email, setEmail] = useState("");
   const [fullName, setFullName] = useState("");
   const [password, setPassword] = useState("");
   const [creating, setCreating] = useState(false);
+  const [editingStripeId, setEditingStripeId] = useState<string | null>(null);
+  const [stripeIdValue, setStripeIdValue] = useState("");
 
   async function handleCreateClient(e: React.FormEvent) {
     e.preventDefault();
@@ -45,6 +48,26 @@ export function ClientsView({ clients }: { clients: Profile[] }) {
       toast.error("Netzwerkfehler");
     }
     setCreating(false);
+  }
+
+  async function saveStripeId(clientId: string) {
+    const supabase = createClient();
+    const { error } = await supabase
+      .from("profiles")
+      .update({ stripe_customer_id: stripeIdValue || null })
+      .eq("id", clientId);
+
+    if (error) {
+      toast.error("Fehler beim Speichern");
+    } else {
+      setClients((prev) =>
+        prev.map((c) =>
+          c.id === clientId ? { ...c, stripe_customer_id: stripeIdValue || null } : c
+        )
+      );
+      toast.success("Stripe Customer ID gespeichert");
+      setEditingStripeId(null);
+    }
   }
 
   return (
@@ -134,6 +157,36 @@ export function ClientsView({ clients }: { clients: Profile[] }) {
                       <Mail className="h-3 w-3" />
                       {client.email}
                     </p>
+                    <div className="text-sm text-muted-foreground flex items-center gap-1 mt-1">
+                      <CreditCard className="h-3 w-3" />
+                      {editingStripeId === client.id ? (
+                        <div className="flex items-center gap-1">
+                          <Input
+                            type="text"
+                            value={stripeIdValue}
+                            onChange={(e) => setStripeIdValue(e.target.value)}
+                            placeholder="cus_..."
+                            className="h-6 text-xs w-48"
+                          />
+                          <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => saveStripeId(client.id)}>
+                            <Check className="h-3 w-3" />
+                          </Button>
+                          <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => setEditingStripeId(null)}>
+                            <X className="h-3 w-3" />
+                          </Button>
+                        </div>
+                      ) : (
+                        <button
+                          className="text-xs hover:underline cursor-pointer"
+                          onClick={() => {
+                            setEditingStripeId(client.id);
+                            setStripeIdValue(client.stripe_customer_id || "");
+                          }}
+                        >
+                          {client.stripe_customer_id || "Stripe ID zuweisen"}
+                        </button>
+                      )}
+                    </div>
                   </div>
                 </div>
                 <div className="text-sm text-muted-foreground">

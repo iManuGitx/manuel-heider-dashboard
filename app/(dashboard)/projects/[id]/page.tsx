@@ -15,6 +15,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Project } from "@/types";
 import { DocumentUpload } from "@/components/projects/document-upload";
+import { StripeFields } from "@/components/projects/stripe-fields";
 
 export default async function ProjectDetailPage({
   params,
@@ -57,6 +58,11 @@ export default async function ProjectDetailPage({
 
         <div className="space-y-4">
           <DocumentUpload projectId={id} documents={documents} />
+          <StripeFields
+            projectId={id}
+            initialSubscriptionId={project.stripe_subscription_id ?? null}
+            initialPriceId={project.stripe_price_id ?? null}
+          />
           <Card className="glass-card rounded-2xl">
             <CardHeader>
               <CardTitle className="text-sm">Details</CardTitle>

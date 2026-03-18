@@ -4,6 +4,7 @@ export interface Profile {
   full_name: string | null;
   role: "admin" | "client";
   avatar_url: string | null;
+  stripe_customer_id: string | null;
   created_at: string;
   updated_at: string;
 }
