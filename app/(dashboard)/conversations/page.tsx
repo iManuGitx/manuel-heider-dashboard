@@ -5,10 +5,12 @@ import { ConversationTable } from "@/components/conversations/conversation-table
 import { ConversationFilters } from "@/components/conversations/conversation-filters";
 import { EmptyState } from "@/components/ui/empty-state";
 import { Skeleton } from "@/components/ui/skeleton";
-import { buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button-variants";
 import { cn } from "@/lib/utils";
 import { MessageSquare, ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
+
+const PAGE_SIZE = 25;
 
 interface Props {
   searchParams: Promise<{
@@ -16,6 +18,7 @@ interface Props {
     search?: string;
     locale?: string;
     hasLead?: string;
+    period?: string;
     dateFrom?: string;
     dateTo?: string;
     page?: string;
@@ -31,13 +34,14 @@ async function ConversationsList({ searchParams }: Props) {
     search: params.search,
     locale: params.locale,
     hasLead: params.hasLead,
+    period: params.period,
     dateFrom: params.dateFrom,
     dateTo: params.dateTo,
     page,
-    limit: 20,
+    limit: PAGE_SIZE,
   });
 
-  const totalPages = Math.ceil(total / 20);
+  const totalPages = Math.ceil(total / PAGE_SIZE);
 
   if (conversations.length === 0) {
     return (

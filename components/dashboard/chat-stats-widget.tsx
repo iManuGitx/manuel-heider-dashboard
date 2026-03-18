@@ -56,11 +56,11 @@ export function ChatStatsWidget({ recentChats, stats }: ChatStatsWidgetProps) {
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-sm">
                     {conv.summary ||
-                      `Session ${conv.session_id.slice(0, 8)}...`}
+                      `Session ${conv.session_id?.slice(0, 8) ?? "—"}...`}
                   </p>
                   <p className="text-xs text-muted-foreground">
-                    {conv.messages.length} Nachrichten &middot;{" "}
-                    {conv.locale.toUpperCase()} &middot;{" "}
+                    {conv.messages?.length ?? 0} Nachrichten &middot;{" "}
+                    {(conv.locale ?? "de").toUpperCase()} &middot;{" "}
                     {new Date(conv.created_at).toLocaleDateString("de-DE")}
                   </p>
                 </div>

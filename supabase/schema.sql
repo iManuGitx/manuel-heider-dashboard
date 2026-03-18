@@ -57,13 +57,19 @@ CREATE TABLE chat_conversations (
   visitor_ip TEXT,
   locale TEXT DEFAULT 'de',
   lead_id UUID REFERENCES leads(id),
+  lead_email TEXT,
   messages JSONB NOT NULL DEFAULT '[]',
   tool_calls JSONB DEFAULT '[]',
   summary TEXT,
   sentiment TEXT CHECK (sentiment IN ('positive', 'neutral', 'negative')),
+  message_count INT DEFAULT 0,
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
+
+CREATE INDEX idx_conversations_created_at ON chat_conversations(created_at);
+CREATE INDEX idx_conversations_lead_email ON chat_conversations(lead_email);
+CREATE INDEX idx_conversations_locale ON chat_conversations(locale);
 
 ALTER TABLE chat_conversations ENABLE ROW LEVEL SECURITY;
 

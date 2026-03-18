@@ -5,7 +5,7 @@ import { ToolCallsPanel } from "@/components/conversations/tool-calls-panel";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button-variants";
 import { cn } from "@/lib/utils";
 import {
   ArrowLeft,
@@ -17,6 +17,7 @@ import {
   Mail,
   Building,
   Wrench,
+  Monitor,
 } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -51,14 +52,14 @@ export default async function ConversationDetailPage({
         <div className="flex-1">
           <h1 className="text-2xl font-bold">
             {conversation.summary ||
-              `Session ${conversation.session_id.slice(0, 12)}`}
+              `Session ${conversation.session_id?.slice(0, 12) ?? "—"}`}
           </h1>
           <p className="text-sm text-muted-foreground">
             Konversations-Details
           </p>
         </div>
         <Badge variant="outline" className="uppercase">
-          {conversation.locale}
+          {conversation.locale === "de" ? "🇩🇪 DE" : conversation.locale === "en" ? "🇬🇧 EN" : (conversation.locale ?? "de").toUpperCase()}
         </Badge>
         {conversation.sentiment && (
           <StatusBadge status={conversation.sentiment} />
@@ -71,11 +72,11 @@ export default async function ConversationDetailPage({
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-sm">
                 <MessageSquare className="h-4 w-4" />
-                Nachrichten ({conversation.messages.length})
+                Nachrichten ({conversation.message_count ?? conversation.messages?.length ?? 0})
               </CardTitle>
             </CardHeader>
             <CardContent>
-              {conversation.messages.length > 0 ? (
+              {conversation.messages?.length > 0 ? (
                 <MessageThread messages={conversation.messages} />
               ) : (
                 <p className="text-sm text-muted-foreground">
@@ -116,12 +117,12 @@ export default async function ConversationDetailPage({
               <div className="flex items-center gap-2 text-sm">
                 <Globe className="h-4 w-4 text-muted-foreground" />
                 <span className="text-muted-foreground">Sprache:</span>
-                <span>{conversation.locale.toUpperCase()}</span>
+                <span>{conversation.locale === "de" ? "Deutsch" : conversation.locale === "en" ? "English" : (conversation.locale ?? "de").toUpperCase()}</span>
               </div>
               <div className="flex items-center gap-2 text-sm">
                 <MessageSquare className="h-4 w-4 text-muted-foreground" />
                 <span className="text-muted-foreground">Nachrichten:</span>
-                <span>{conversation.messages.length}</span>
+                <span>{conversation.message_count ?? conversation.messages?.length ?? 0}</span>
               </div>
               <div className="flex items-center gap-2 text-sm">
                 <Clock className="h-4 w-4 text-muted-foreground" />
@@ -139,12 +140,47 @@ export default async function ConversationDetailPage({
                   )}
                 </span>
               </div>
+              <div className="flex items-center gap-2 text-sm">
+                <Clock className="h-4 w-4 text-muted-foreground" />
+                <span className="text-muted-foreground">Aktualisiert:</span>
+                <span>
+                  {new Date(conversation.updated_at).toLocaleDateString(
+                    "de-DE",
+                    {
+                      day: "2-digit",
+                      month: "long",
+                      year: "numeric",
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    }
+                  )}
+                </span>
+              </div>
+              {conversation.lead_email && (
+                <div className="flex items-center gap-2 text-sm">
+                  <Mail className="h-4 w-4 text-muted-foreground" />
+                  <span className="text-muted-foreground">Lead E-Mail:</span>
+                  <a
+                    href={`mailto:${conversation.lead_email}`}
+                    className="text-primary hover:underline"
+                  >
+                    {conversation.lead_email}
+                  </a>
+                </div>
+              )}
               {conversation.visitor_ip && (
-                <div className="text-sm">
-                  <span className="text-muted-foreground">IP:</span>{" "}
+                <div className="flex items-center gap-2 text-sm">
+                  <Monitor className="h-4 w-4 text-muted-foreground" />
+                  <span className="text-muted-foreground">IP:</span>
                   <span className="font-mono text-xs">
                     {conversation.visitor_ip}
                   </span>
+                </div>
+              )}
+              {conversation.sentiment && (
+                <div className="flex items-center gap-2 text-sm">
+                  <span className="text-muted-foreground">Stimmung:</span>
+                  <StatusBadge status={conversation.sentiment} />
                 </div>
               )}
             </CardContent>
