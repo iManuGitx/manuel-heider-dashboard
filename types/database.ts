@@ -77,6 +77,51 @@ export interface Project {
   monthly_revenue: number | null;
   start_date: string | null;
   next_billing: string | null;
+  stripe_subscription_id: string | null;
+  stripe_price_id: string | null;
   created_at: string;
   updated_at: string;
+}
+
+// Documents
+export type DocumentCategory = "general" | "contract" | "report" | "deliverable";
+
+export interface Document {
+  id: string;
+  project_id: string;
+  uploaded_by: string;
+  file_name: string;
+  file_path: string;
+  file_size: number | null;
+  mime_type: string | null;
+  category: DocumentCategory;
+  created_at: string;
+  project?: Pick<Project, "name">;
+}
+
+// Tickets
+export type TicketStatus = "open" | "in-progress" | "resolved";
+export type TicketPriority = "low" | "normal" | "high";
+
+export interface Ticket {
+  id: string;
+  client_id: string;
+  project_id: string | null;
+  subject: string;
+  status: TicketStatus;
+  priority: TicketPriority;
+  created_at: string;
+  updated_at: string;
+  client?: Pick<Profile, "full_name" | "email">;
+  project?: Pick<Project, "name"> | null;
+  ticket_messages?: { count: number }[];
+}
+
+export interface TicketMessage {
+  id: string;
+  ticket_id: string;
+  sender_id: string;
+  message: string;
+  created_at: string;
+  sender?: Pick<Profile, "full_name" | "role" | "avatar_url">;
 }

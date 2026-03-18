@@ -1,4 +1,5 @@
 import { getProject } from "@/lib/queries/projects";
+import { getProjectDocuments } from "@/lib/queries/documents";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { buttonVariants } from "@/components/ui/button";
@@ -13,6 +14,7 @@ import {
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Project } from "@/types";
+import { DocumentUpload } from "@/components/projects/document-upload";
 
 export default async function ProjectDetailPage({
   params,
@@ -23,6 +25,8 @@ export default async function ProjectDetailPage({
 
   const project = await getProject(id);
   if (!project) notFound();
+
+  const documents = await getProjectDocuments(id);
 
   return (
     <div className="space-y-6">
@@ -52,6 +56,7 @@ export default async function ProjectDetailPage({
         </div>
 
         <div className="space-y-4">
+          <DocumentUpload projectId={id} documents={documents} />
           <Card className="glass-card rounded-2xl">
             <CardHeader>
               <CardTitle className="text-sm">Details</CardTitle>

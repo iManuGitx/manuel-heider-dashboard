@@ -6,8 +6,10 @@ import { cn } from "@/lib/utils";
 import {
   LayoutDashboard,
   Users,
+  UserCheck,
   MessageSquare,
   FolderKanban,
+  TicketCheck,
   BarChart3,
   Settings,
 } from "lucide-react";
@@ -15,8 +17,10 @@ import {
 const navItems = [
   { label: "Übersicht", href: "/", icon: LayoutDashboard },
   { label: "Leads", href: "/leads", icon: Users },
+  { label: "Kunden", href: "/clients", icon: UserCheck },
   { label: "Konversationen", href: "/conversations", icon: MessageSquare },
   { label: "Projekte", href: "/projects", icon: FolderKanban },
+  { label: "Tickets", href: "/tickets", icon: TicketCheck },
   { label: "Analytics", href: "/analytics", icon: BarChart3 },
   { label: "Einstellungen", href: "/settings", icon: Settings },
 ];
