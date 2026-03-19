@@ -62,6 +62,7 @@ export default async function ProjectDetailPage({
             projectId={id}
             initialSubscriptionId={project.stripe_subscription_id ?? null}
             initialPriceId={project.stripe_price_id ?? null}
+            initialSetupPriceId={project.stripe_setup_price_id ?? null}
           />
           <Card className="glass-card rounded-2xl">
             <CardHeader>

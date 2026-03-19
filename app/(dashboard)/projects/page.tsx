@@ -1,7 +1,9 @@
 import { Suspense } from "react";
 import { getProjects } from "@/lib/queries/projects";
+import { getClients } from "@/lib/queries/clients";
 import { PageHeader } from "@/components/ui/page-header";
 import { ProjectCard } from "@/components/projects/project-card";
+import { ProjectsPageClient } from "@/components/projects/projects-page-client";
 import { EmptyState } from "@/components/ui/empty-state";
 import { Skeleton } from "@/components/ui/skeleton";
 import { FolderKanban } from "lucide-react";
@@ -39,13 +41,17 @@ async function ProjectsList({ searchParams }: Props) {
   );
 }
 
-export default function ProjectsPage(props: Props) {
+export default async function ProjectsPage(props: Props) {
+  const clients = await getClients();
+
   return (
     <div className="space-y-6">
-      <PageHeader
-        title="Projekte"
-        description="Projektübersicht und -verwaltung"
-      />
+      <ProjectsPageClient clients={clients.map(c => ({ id: c.id, full_name: c.full_name, email: c.email }))}>
+        <PageHeader
+          title="Projekte"
+          description="Projektübersicht und -verwaltung"
+        />
+      </ProjectsPageClient>
       <Suspense
         fallback={
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

@@ -12,13 +12,16 @@ export function StripeFields({
   projectId,
   initialSubscriptionId,
   initialPriceId,
+  initialSetupPriceId,
 }: {
   projectId: string;
   initialSubscriptionId: string | null;
   initialPriceId: string | null;
+  initialSetupPriceId: string | null;
 }) {
   const [subscriptionId, setSubscriptionId] = useState(initialSubscriptionId || "");
   const [priceId, setPriceId] = useState(initialPriceId || "");
+  const [setupPriceId, setSetupPriceId] = useState(initialSetupPriceId || "");
   const [saving, setSaving] = useState(false);
 
   async function handleSave() {
@@ -29,6 +32,7 @@ export function StripeFields({
       .update({
         stripe_subscription_id: subscriptionId || null,
         stripe_price_id: priceId || null,
+        stripe_setup_price_id: setupPriceId || null,
       })
       .eq("id", projectId);
 
@@ -60,11 +64,21 @@ export function StripeFields({
           />
         </div>
         <div>
-          <label className="text-xs text-muted-foreground mb-1 block">Price ID</label>
+          <label className="text-xs text-muted-foreground mb-1 block">Price ID (monatlich)</label>
           <Input
             type="text"
             value={priceId}
             onChange={(e) => setPriceId(e.target.value)}
+            placeholder="price_..."
+            className="text-xs"
+          />
+        </div>
+        <div>
+          <label className="text-xs text-muted-foreground mb-1 block">Setup Price ID (einmalig)</label>
+          <Input
+            type="text"
+            value={setupPriceId}
+            onChange={(e) => setSetupPriceId(e.target.value)}
             placeholder="price_..."
             className="text-xs"
           />
