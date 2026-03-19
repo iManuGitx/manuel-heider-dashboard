@@ -7,7 +7,7 @@ import type { Profile } from "@/types/database";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { UserPlus, Mail, User, CreditCard, Check, X } from "lucide-react";
+import { UserPlus, Mail, User, CreditCard, Check, X, Eye, EyeOff } from "lucide-react";
 import { toast } from "sonner";
 
 export function ClientsView({ clients: initialClients }: { clients: Profile[] }) {
@@ -18,6 +18,7 @@ export function ClientsView({ clients: initialClients }: { clients: Profile[] })
   const [fullName, setFullName] = useState("");
   const [password, setPassword] = useState("");
   const [creating, setCreating] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [editingStripeId, setEditingStripeId] = useState<string | null>(null);
   const [stripeIdValue, setStripeIdValue] = useState("");
 
@@ -113,14 +114,24 @@ export function ClientsView({ clients: initialClients }: { clients: Profile[] })
               </div>
               <div>
                 <label className="text-sm font-medium text-muted-foreground mb-1 block">Passwort *</label>
-                <Input
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Mindestens 8 Zeichen"
-                  minLength={8}
-                  required
-                />
+                <div className="relative">
+                  <Input
+                    type={showPassword ? "text" : "password"}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Mindestens 8 Zeichen"
+                    minLength={8}
+                    required
+                    className="pr-10"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                  >
+                    {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                  </button>
+                </div>
               </div>
               <div className="flex gap-2">
                 <Button type="submit" disabled={creating}>
